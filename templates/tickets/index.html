@@ -3,7 +3,7 @@
 {% block body %}
     <div class="col col-12">
         <h1>Tickets</h1>
-        <a class="float-right btn btn-outline-primary" href="{% url 'tickets:index' %}">Crear <i class="fa fa-plus"></i></a>
+        <a class="float-right btn btn-outline-primary" href="{% url 'tickets:create' %}">Crear <i class="fa fa-plus"></i></a>
         <hr>
         {% if tickets %}
             {% for ticket in tickets %}

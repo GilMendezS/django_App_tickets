@@ -10,6 +10,35 @@ def index(request):
         'tickets': tickets
     }
     return render(request, "tickets/index.html",context)
+def create(request):
+    users = User.objects.all()
+    statuses = Status.objects.all()
+    context = {
+        'users': users,
+        'statuses': statuses,
+    }
+    return render(request,  "tickets/create.html", context)
+def store(request):
+   
+    try:
+        ticket = Ticket()
+        ticket.title = request.POST['title']
+        ticket.description = request.POST['description']
+        ticket.client = request.POST['client']
+        ticket.user_id = request.POST['user_id']
+        ticket.status_id = request.POST['status_id']
+        ticket.save()
+        return HttpResponseRedirect(reverse('tickets:index'))
+    except:
+        users = User.objects.all()
+        statuses = Status.objects.all()
+        context = {
+            'users': users,
+            'statuses': statuses,
+            'error_message': 'Error creating the ticket'
+        }
+        return render(request,  "tickets/create.html", context)
+    
 def details(request, id):
     ticket = get_object_or_404(Ticket, pk = id)
     users = User.objects.all()
