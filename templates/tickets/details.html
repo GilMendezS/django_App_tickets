@@ -1,0 +1,50 @@
+{% extends 'layouts/master.html' %}
+
+{% block body %}
+    <div class="col col-12 col-md-6">
+        <h1>Editar</h1>
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{error_message}}
+            </div>
+
+        {%endif%}
+        <form action="{% url 'tickets:update' ticket.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title"  name="title" class="form-control" value="{{ticket.title}}" />
+            </div>
+            <div class="form-group">
+                <label for="client">Client</label>
+                <input type="text" id="client"  name="client" class="form-control" value="{{ticket.client}}" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description">{{ticket.description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="user_id">User</label>
+                <select name="user_id" id="user_id" class="form-control">
+                    {% for user in users %}
+                        <option {% if user.id == ticket.user_id %} selected {%endif%} value="{{user.id}}">{{user.username}} - {{user.email}} </option>
+                    {%  endfor %}
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="status_id">Status</label>
+                <select name="status_id" id="status_id" class="form-control">
+                    {% for status in statuses %}
+                        <option {% if status.id == ticket.status_id %} selected {%endif%} value="{{status.id}}">{{status.title}}</option>
+                    {% endfor %}
+                    
+                </select>
+            </div>
+            <button class="btn btn-outline-primary" type="submit">Submit <i class="fa fa-refresh"></i></button>
+
+        </form>
+    </div>
+    
+
+{% endblock body %}
