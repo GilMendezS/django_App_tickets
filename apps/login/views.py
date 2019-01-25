@@ -8,6 +8,8 @@ from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
 def login_page(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('tickets:index'))
     return render(request, 'auth/login.html')
 @require_http_methods(['POST'])
 def try_login(request):
