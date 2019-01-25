@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.tickets.TicketsConfig'
+    'apps.tickets'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +76,13 @@ WSGI_APPLICATION = 'tickets.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_tickets',
+        'USER': 'django',
+        'PASSWORD': 'django',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+        
     }
 }
 
