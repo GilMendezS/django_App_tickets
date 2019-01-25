@@ -8,10 +8,11 @@
         {% if tickets %}
             <div class="row">
                 {% for ticket in tickets %}
-            
                     <div class="card col col-12 col-md-4 ">
                         <div class="card-body">
-                            <h5 class="card-title ">{{ticket.title}}</h5>
+                            <h5 class="card-title ">{{ticket.title}} </h5>
+                            <p><i class="fa fa-tag"></i> <span class="badge badge-primary">{{ticket.status.title}}</span></p>
+                            <p><i class="fa fa-user"></i> {{ticket.user.username}}</p>
 
                             <a href="{% url 'tickets:details' ticket.id %}" class="card-link btn btn-outline-info"> 
                                 <i class="fa fa-eye"></i>
