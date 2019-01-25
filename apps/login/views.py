@@ -24,7 +24,7 @@ def try_login(request):
             "error_message":'Incorrect Login.'
         }
         return render(request, 'auth/login.html', context)
-    @require_http_methods(['POST'])
-    def logout(request):
-        logout(request)
-        return HttpResponseRedirect(reverse('auth:login'))
+@require_http_methods(['POST'])
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('auth:login'))

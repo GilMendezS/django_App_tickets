@@ -3,13 +3,17 @@ from .models import Ticket, Status
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def index(request):
     tickets = Ticket.objects.all()
     context = { 
         'tickets': tickets
     }
     return render(request, "tickets/index.html",context)
+@login_required
 def create(request):
     users = User.objects.all()
     statuses = Status.objects.all()
@@ -18,8 +22,8 @@ def create(request):
         'statuses': statuses,
     }
     return render(request,  "tickets/create.html", context)
+@login_required
 def store(request):
-   
     try:
         ticket = Ticket()
         ticket.title = request.POST['title']
@@ -38,7 +42,7 @@ def store(request):
             'error_message': 'Error creating the ticket'
         }
         return render(request,  "tickets/create.html", context)
-    
+@login_required
 def details(request, id):
     ticket = get_object_or_404(Ticket, pk = id)
     users = User.objects.all()
@@ -49,6 +53,7 @@ def details(request, id):
         'statuses': statuses
     }
     return render(request,  "tickets/details.html", context)
+@login_required
 def update(request, id):
     ticket = get_object_or_404(Ticket, pk=id)
     try:
