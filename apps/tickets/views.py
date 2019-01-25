@@ -55,8 +55,8 @@ def update(request, id):
         ticket.title = request.POST['title']
         ticket.description = request.POST['description']
         ticket.client = request.POST['client']
-        ticket.user_id = User.objects.get(pk=request.POST['user_id'])
-        ticket.status_id = Status.objects.get(pk=request.POST['status_id'])
+        ticket.user_id = request.POST['user_id']
+        ticket.status_id = request.POST['status_id']
         ticket.save()
         return HttpResponseRedirect(reverse('tickets:index'))
     except:
