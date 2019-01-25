@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.http import require_http_methods
 # Create your views here.
 
@@ -24,3 +24,7 @@ def try_login(request):
             "error_message":'Incorrect Login.'
         }
         return render(request, 'auth/login.html', context)
+    @require_http_methods(['POST'])
+    def logout(request):
+        logout(request)
+        return HttpResponseRedirect(reverse('auth:login'))
