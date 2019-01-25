@@ -2,13 +2,17 @@ from django.urls import reverse
 from .models import Ticket, Status
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.views.decorators.http import require_http_methods
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 # Create your views here.
 @login_required
 def index(request):
-    tickets = Ticket.objects.all()
+    tickets_list = Ticket.objects.all()
+    paginator = Paginator(tickets_list, 3)
+    page = request.GET.get('page')
+    tickets = paginator.get_page(page)
     context = { 
         'tickets': tickets
     }
