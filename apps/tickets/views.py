@@ -14,7 +14,8 @@ def index(request):
     page = request.GET.get('page')
     tickets = paginator.get_page(page)
     context = { 
-        'tickets': tickets
+        'tickets': tickets,
+        'current_url': 'tickets'
     }
     return render(request, "tickets/index.html",context)
 @login_required
@@ -24,6 +25,7 @@ def create(request):
     context = {
         'users': users,
         'statuses': statuses,
+        'current_url': 'tickets'
     }
     return render(request,  "tickets/create.html", context)
 @login_required
@@ -43,7 +45,8 @@ def store(request):
         context = {
             'users': users,
             'statuses': statuses,
-            'error_message': 'Error creating the ticket'
+            'error_message': 'Error creating the ticket',
+            'current_url': 'tickets'
         }
         return render(request,  "tickets/create.html", context)
 @login_required
@@ -54,7 +57,8 @@ def details(request, id):
     context = {
         'ticket': ticket,
         'users': users,
-        'statuses': statuses
+        'statuses': statuses,
+        'current_url': 'tickets'
     }
     return render(request,  "tickets/details.html", context)
 @login_required
@@ -75,14 +79,16 @@ def update(request, id):
             'ticket': ticket,
             'users': users,
             'statuses': statuses,
-            'error_message': "Error updating the ticket"
+            'error_message': "Error updating the ticket",
+            'current_url': 'tickets'
         }
         return render(request,  "tickets/details.html", context)
 @require_http_methods(['GET'])
 def get_statuses(request):
     statuses = Status.objects.all()
     context = {
-        "statuses": statuses
+        "statuses": statuses,
+        'current_url': 'statuses'
     }
     return render(request, 'tickets/statuses/index.html', context)
 @require_http_methods(['GET','POST'])
@@ -94,6 +100,6 @@ def add_status(request):
         status.save()
         return HttpResponseRedirect(reverse('tickets:statuses'))
         #except:
-        return render(request, 'tickets/statuses/create.html', {"error_message": "The status was not created"})
+        return render(request, 'tickets/statuses/create.html', {"error_message": "The status was not created",'current_url': 'statuses'})
     else:
-        return render(request, 'tickets/statuses/create.html')
+        return render(request, 'tickets/statuses/create.html', {'current_url': 'statuses'})
