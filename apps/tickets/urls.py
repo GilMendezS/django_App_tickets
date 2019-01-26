@@ -9,6 +9,6 @@ urlpatterns = [
     path('add', views.store , name='store'),
     path('create', views.create, name='create'),
     path('<int:id>/update', views.update, name='update'),
-
-    
+    path('statuses', views.get_statuses, name='statuses'),
+    path('statuses/add', views.add_status, name='add-status')
 ]

@@ -78,4 +78,22 @@ def update(request, id):
             'error_message': "Error updating the ticket"
         }
         return render(request,  "tickets/details.html", context)
-        
+@require_http_methods(['GET'])
+def get_statuses(request):
+    statuses = Status.objects.all()
+    context = {
+        "statuses": statuses
+    }
+    return render(request, 'tickets/statuses/index.html', context)
+@require_http_methods(['GET','POST'])
+def add_status(request):
+    if request.method == 'POST':
+        #try:
+        status = Status()
+        status.title = request.POST['title']
+        status.save()
+        return HttpResponseRedirect(reverse('tickets:statuses'))
+        #except:
+        return render(request, 'tickets/statuses/create.html', {"error_message": "The status was not created"})
+    else:
+        return render(request, 'tickets/statuses/create.html')
